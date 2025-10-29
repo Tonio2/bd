@@ -1,0 +1,42 @@
+<svg width="800" height="1200" xmlns="http://www.w3.org/2000/svg">
+  <rect width="800" height="1200" fill="#FFFFFF"/>
+
+  <!-- Page border -->
+  <rect x="40" y="60" width="720" height="1080" fill="none" stroke="#333333" stroke-width="2"/>
+
+  <!-- Large page number for easy identification -->
+  <text x="400" y="600" font-family="Arial" font-size="180" font-weight="bold" fill="#60A5FA" text-anchor="middle" opacity="0.8">
+    6
+  </text>
+
+  <!-- Comic title -->
+  <text x="400" y="700" font-family="Arial" font-size="32" fill="#333333" text-anchor="middle">
+    Cosmos Perdu
+  </text>
+
+  <!-- Page label -->
+  <text x="400" y="760" font-family="Arial" font-size="24" fill="#666666" text-anchor="middle">
+    Page 6
+  </text>
+
+  <!-- Panel placeholders -->
+  <rect x="80" y="100" width="640" height="200" fill="#E5E5E5" stroke="#666666" stroke-width="2"/>
+  <text x="400" y="210" font-family="Arial" font-size="24" fill="#999999" text-anchor="middle">Panel 1</text>
+
+  <rect x="80" y="340" width="300" height="200" fill="#E5E5E5" stroke="#666666" stroke-width="2"/>
+  <text x="230" y="450" font-family="Arial" font-size="20" fill="#999999" text-anchor="middle">Panel 2</text>
+
+  <rect x="420" y="340" width="300" height="200" fill="#E5E5E5" stroke="#666666" stroke-width="2"/>
+  <text x="570" y="450" font-family="Arial" font-size="20" fill="#999999" text-anchor="middle">Panel 3</text>
+
+  <rect x="80" y="580" width="640" height="200" fill="#E5E5E5" stroke="#666666" stroke-width="2"/>
+  <text x="400" y="690" font-family="Arial" font-size="24" fill="#999999" text-anchor="middle">Panel 4</text>
+
+  <!-- Page number at bottom -->
+  <text x="80" y="1150" font-family="Arial" font-size="28" font-weight="bold" fill="#1E3A8A" text-anchor="middle">
+    6
+  </text>
+
+  <!-- Accent decoration -->
+  <circle cx="100" cy="100" r="30" fill="#60A5FA" opacity="0.3"/>
+</svg>

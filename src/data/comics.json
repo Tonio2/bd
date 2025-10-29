@@ -1,0 +1,154 @@
+{
+  "comics": [
+    {
+      "id": "quete-mystique",
+      "title": "La Quête Mystique",
+      "author": "Jean Dubois",
+      "description": "Une aventure épique à travers des royaumes fantastiques remplis de magie et de mystères.",
+      "coverImage": "/comics/quete-mystique/cover.svg",
+      "pages": [
+        {
+          "number": 1,
+          "image": "/comics/quete-mystique/1.svg",
+          "alt": "Page 1 - Le début de l'aventure"
+        },
+        {
+          "number": 2,
+          "image": "/comics/quete-mystique/2.svg",
+          "alt": "Page 2 - Rencontre avec le sage"
+        },
+        {
+          "number": 3,
+          "image": "/comics/quete-mystique/3.svg",
+          "alt": "Page 3 - La forêt enchantée"
+        },
+        {
+          "number": 4,
+          "image": "/comics/quete-mystique/4.svg",
+          "alt": "Page 4 - Le dragon endormi"
+        },
+        {
+          "number": 5,
+          "image": "/comics/quete-mystique/5.svg",
+          "alt": "Page 5 - La bataille épique"
+        },
+        {
+          "number": 6,
+          "image": "/comics/quete-mystique/6.svg",
+          "alt": "Page 6 - La victoire"
+        }
+      ],
+      "totalPages": 6,
+      "publishDate": "2024-01",
+      "tags": ["fantasy", "aventure", "magie"],
+      "metadata": {
+        "width": 1200,
+        "height": 1800,
+        "aspectRatio": "2:3"
+      }
+    },
+    {
+      "id": "cosmos-perdu",
+      "title": "Cosmos Perdu",
+      "author": "Marie Laurent",
+      "description": "Un thriller de science-fiction sur fond d'exploration spatiale et de découvertes mystérieuses.",
+      "coverImage": "/comics/cosmos-perdu/cover.svg",
+      "pages": [
+        {
+          "number": 1,
+          "image": "/comics/cosmos-perdu/1.svg",
+          "alt": "Page 1 - Le vaisseau spatial"
+        },
+        {
+          "number": 2,
+          "image": "/comics/cosmos-perdu/2.svg",
+          "alt": "Page 2 - Planète inconnue"
+        },
+        {
+          "number": 3,
+          "image": "/comics/cosmos-perdu/3.svg",
+          "alt": "Page 3 - Première rencontre"
+        },
+        {
+          "number": 4,
+          "image": "/comics/cosmos-perdu/4.svg",
+          "alt": "Page 4 - Le signal mystérieux"
+        },
+        {
+          "number": 5,
+          "image": "/comics/cosmos-perdu/5.svg",
+          "alt": "Page 5 - La révélation"
+        },
+        {
+          "number": 6,
+          "image": "/comics/cosmos-perdu/6.svg",
+          "alt": "Page 6 - Retour à la base"
+        }
+      ],
+      "totalPages": 6,
+      "publishDate": "2024-02",
+      "tags": ["sci-fi", "espace", "thriller"],
+      "metadata": {
+        "width": 1200,
+        "height": 1800,
+        "aspectRatio": "2:3"
+      }
+    },
+    {
+      "id": "ombres-urbaines",
+      "title": "Ombres Urbaines",
+      "author": "Thomas Noir",
+      "description": "Une histoire noir dans les rues sombres de la ville, où chaque ombre cache un secret.",
+      "coverImage": "/comics/ombres-urbaines/cover.svg",
+      "pages": [
+        {
+          "number": 1,
+          "image": "/comics/ombres-urbaines/1.svg",
+          "alt": "Page 1 - Les rues nocturnes"
+        },
+        {
+          "number": 2,
+          "image": "/comics/ombres-urbaines/2.svg",
+          "alt": "Page 2 - Le détective"
+        },
+        {
+          "number": 3,
+          "image": "/comics/ombres-urbaines/3.svg",
+          "alt": "Page 3 - Le mystère s'épaissit"
+        },
+        {
+          "number": 4,
+          "image": "/comics/ombres-urbaines/4.svg",
+          "alt": "Page 4 - La confrontation"
+        },
+        {
+          "number": 5,
+          "image": "/comics/ombres-urbaines/5.svg",
+          "alt": "Page 5 - La vérité éclate"
+        },
+        {
+          "number": 6,
+          "image": "/comics/ombres-urbaines/6.svg",
+          "alt": "Page 6 - Justice est faite"
+        }
+      ],
+      "totalPages": 6,
+      "publishDate": "2024-03",
+      "tags": ["noir", "mystère", "thriller"],
+      "metadata": {
+        "width": 1200,
+        "height": 1800,
+        "aspectRatio": "2:3"
+      }
+    }
+  ],
+  "settings": {
+    "defaultPageTurnDuration": 800,
+    "enableSoundEffects": true,
+    "soundEffects": {
+      "pageTurn": "/sounds/page-turn.mp3",
+      "bookOpen": "/sounds/book-open.mp3",
+      "bookClose": "/sounds/book-close.mp3"
+    }
+  }
+}
