@@ -1,118 +1,89 @@
 // ==> src/components/BookPage.jsx
-import { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect, useMemo } from 'react';
 import * as THREE from 'three';
 
+const textureCache = new Map();
+
+function loadTexture(url) {
+  if (!url) return null;
+  if (textureCache.has(url)) return textureCache.get(url);
+
+  const loader = new THREE.TextureLoader();
+  const texture = loader.load(url);
+  texture.minFilter = THREE.LinearFilter;
+  texture.magFilter = THREE.LinearFilter;
+  texture.anisotropy = 16;
+  texture.colorSpace = THREE.SRGBColorSpace;
+  textureCache.set(url, texture);
+  return texture;
+}
+
 /**
- * BookPage : une page avec recto/verso.
- * Le verso est rendu sur le BackSide du même plan + flip UV pour éviter l'image miroir.
+ * BookPage : une page recto/verso qui pivote autour de la tranche centrale.
  */
 export function BookPage({
   frontImageUrl,
   backImageUrl,
   position = [0, 0, 0],
-  rotationY = 0,          // rotation actuelle sur Y
-  side = 'right',         // 'left' ou 'right'
-  zIndex = 0,
+  rotationY = 0,
+  side = 'right',          // 'left' ou 'right'
+  renderOrderBase = 0,     // verso = base, recto = base+1
 }) {
   const groupRef = useRef();
-  const [frontTexture, setFrontTexture] = useState(null);
-  const [backTexture, setBackTexture] = useState(null);
 
-  // Front
-  useEffect(() => {
-    if (!frontImageUrl) return;
-    const loader = new THREE.TextureLoader();
-    const t = loader.load(
-      frontImageUrl,
-      (tex) => {
-        tex.minFilter = THREE.LinearFilter;
-        tex.magFilter = THREE.LinearFilter;
-        tex.anisotropy = 16;
-        tex.colorSpace = THREE.SRGBColorSpace;
-        setFrontTexture(tex);
-      },
-      undefined,
-      (err) => console.error('Error loading front texture:', err)
-    );
-    return () => t?.dispose?.();
-  }, [frontImageUrl]);
+  // Préchargement et mise en cache
+  const frontTexture = useMemo(() => loadTexture(frontImageUrl), [frontImageUrl]);
+  const backTexture  = useMemo(() => loadTexture(backImageUrl),  [backImageUrl]);
 
-  // Back
-  useEffect(() => {
-    if (!backImageUrl) {
-      setBackTexture(null);
-      return;
-    }
-    const loader = new THREE.TextureLoader();
-    const t = loader.load(
-      backImageUrl,
-      (tex) => {
-        tex.minFilter = THREE.LinearFilter;
-        tex.magFilter = THREE.LinearFilter;
-        tex.anisotropy = 16;
-        tex.colorSpace = THREE.SRGBColorSpace;
-        // Flip horizontal pour compenser le rendu BackSide
-        tex.wrapS = THREE.RepeatWrapping;
-        tex.repeat.x = -1;
-        tex.offset.x = 1;
-        setBackTexture(tex);
-      },
-      undefined,
-      (err) => console.error('Error loading back texture:', err)
-    );
-    return () => t?.dispose?.();
-  }, [backImageUrl]);
-
-  // Appliquer la rotation
+  // Mise à jour de la rotation
   useEffect(() => {
     if (groupRef.current) groupRef.current.rotation.y = rotationY;
   }, [rotationY]);
 
   if (!frontTexture) return null;
 
-  // Pivot : page droite pivote autour du bord gauche, page gauche autour du bord droit
-  const pivotX = side === 'right' ? -1.2 : 1.2;
+  const PAGE_WIDTH = 2.4;
+  const PAGE_HALF = PAGE_WIDTH / 2;
+  const SPINE_GAP = 0.105;
+  const HALF_SPINE = SPINE_GAP / 2;
+  const EPS = 0.002; // légèrement augmenté pour éviter z-fighting
+
+  const pivotX = side === 'right'
+    ? -(PAGE_HALF + HALF_SPINE)
+    : (PAGE_HALF + HALF_SPINE);
 
   return (
-    <group
-      ref={groupRef}
-      position={[position[0] + pivotX, position[1], position[2] + zIndex * 0.001]}
-    >
-      {/* Décaler le mesh pour pivoter autour du bord */}
+    <group ref={groupRef} position={[position[0] + pivotX, position[1], position[2]]}>
       <group position={[-pivotX, 0, 0]}>
-        {/* Recto */}
-        <mesh>
-          <planeGeometry args={[2.4, 3.6]} />
-          <meshBasicMaterial map={frontTexture} side={THREE.FrontSide} toneMapped={false} />
-        </mesh>
-
-        {/* Verso (rendu sur le BackSide du même plan) */}
-        <mesh>
-          <planeGeometry args={[2.4, 3.6]} />
-          {backTexture ? (
-            <meshBasicMaterial
-              map={backTexture}
-              side={THREE.BackSide}
-              toneMapped={false}
-              polygonOffset
-              polygonOffsetFactor={-1}
-              polygonOffsetUnits={1}
-            />
-          ) : (
-            <meshBasicMaterial
-              color="#f8f8f8"
-              side={THREE.BackSide}
-              toneMapped={false}
-              polygonOffset
-              polygonOffsetFactor={-1}
-              polygonOffsetUnits={1}
-            />
-          )}
-        </mesh>
-
-        {/* Tranche de la page */}
+        {/* Verso */}
         <mesh
-          position={[side === 'right' ? 1.2 : -1.2, 0, 0]}
+          renderOrder={renderOrderBase}
+          position={[0, 0, -EPS]}
+          rotation={[0, Math.PI, 0]}
+        >
+          <planeGeometry args={[PAGE_WIDTH, 3.6]} />
+          <meshBasicMaterial
+            map={backTexture}
+            color={backTexture ? undefined : "#f8f8f8"}
+            side={THREE.DoubleSide}  // ✅ plus de face noire
+            toneMapped={false}
+          />
+        </mesh>
+
+        {/* Recto */}
+        <mesh renderOrder={renderOrderBase + 1} position={[0, 0, EPS]}>
+          <planeGeometry args={[PAGE_WIDTH, 3.6]} />
+          <meshBasicMaterial
+            map={frontTexture}
+            side={THREE.FrontSide}
+            toneMapped={false}
+          />
+        </mesh>
+
+        {/* Tranche */}
+        <mesh
+          renderOrder={renderOrderBase + 2}
+          position={[side === 'right' ? PAGE_HALF : -PAGE_HALF, 0, 0]}
           rotation={[0, Math.PI / 2, 0]}
         >
           <planeGeometry args={[0.002, 3.6]} />

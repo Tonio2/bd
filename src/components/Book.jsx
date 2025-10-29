@@ -1,31 +1,41 @@
 // ==> src/components/Book.jsx
-import { Suspense } from 'react';
+import { Suspense, useMemo } from 'react';
 import { Canvas } from '@react-three/fiber';
 import * as THREE from 'three';
 import { BookPage } from './BookPage';
 
+/**
+ * Book : rend le livre complet avec ses pages et les transitions entre spreads.
+ */
 export function Book({
-  pages,              // tableau { image: string }
-  currentSpread,      // index du spread courant (0,1,2, …)
-  turnProgress,       // 0 → 1
-  isTurningForward,   // true : on tourne la page de droite, false : la gauche
+  pages,              // [{ image: string }, ...]
+  currentSpread,      // index du spread affiché
+  turnProgress,       // 0..1
+  isTurningForward,   // true = tourne la page de droite
 }) {
-  // Pour le spread N : page gauche = 2N, page droite = 2N+1
+  // Indices des pages du spread courant
   const leftPageIndex  = currentSpread * 2;
   const rightPageIndex = leftPageIndex + 1;
 
-  // Spread suivant (utilisé pour le verso quand on tourne en avant)
+  // Spreads adjacent
   const nextLeftPageIndex  = leftPageIndex + 2;
   const nextRightPageIndex = rightPageIndex + 2;
-
-  // Spread précédent (utilisé pour le verso quand on tourne en arrière)
   const prevLeftPageIndex  = leftPageIndex - 2;
   const prevRightPageIndex = rightPageIndex - 2;
 
-  // Rotation de la page en cours de tournage
-  const turningPageRotation = isTurningForward
-    ? -turnProgress * Math.PI  // page droite tourne vers la droite
-    :  turnProgress * Math.PI; // page gauche tourne vers la gauche
+  // Rotation dynamique de la page en train de tourner
+  const turningPageRotation = useMemo(() => (
+    isTurningForward ? -turnProgress * Math.PI : turnProgress * Math.PI
+  ), [isTurningForward, turnProgress]);
+
+  // Positions des pages (largeur 2.4 → demi 1.2 + marge)
+  const LEFT_X  = -1.25;
+  const RIGHT_X =  1.25;
+
+  // Ordres de rendu (plus grand = au-dessus)
+  const UNDER_ORDER  = 1;
+  const STATIC_ORDER = 5;
+  const TURN_ORDER   = 10;
 
   return (
     <Canvas
@@ -34,130 +44,115 @@ export function Book({
         antialias: true,
         toneMapping: THREE.NoToneMapping,
         outputColorSpace: THREE.SRGBColorSpace,
+        preserveDrawingBuffer: true, // ✅ empêche certains clignotements
       }}
     >
       <ambientLight intensity={2} />
 
       <Suspense fallback={null}>
-        {/* --- ANIMATION AVANT (tourne la page de droite) --- */}
+        {/* === PAGE TOURNEE EN AVANT === */}
         {isTurningForward && turnProgress > 0 ? (
           <>
-            {/* Spread suivant (déjà visible en-dessous) */}
+            {/* Spread suivant sous la page qui tourne */}
             {pages[nextLeftPageIndex] && (
               <BookPage
                 frontImageUrl={pages[nextLeftPageIndex].image}
-                backImageUrl={null}
-                position={[-1.25, 0, 0]}
+                position={[LEFT_X, 0, 0]}
                 rotationY={0}
                 side="left"
-                zIndex={1}
+                renderOrderBase={UNDER_ORDER}
               />
             )}
             {pages[nextRightPageIndex] && (
               <BookPage
                 frontImageUrl={pages[nextRightPageIndex].image}
-                backImageUrl={null}
-                position={[1.25, 0, 0]}
+                position={[RIGHT_X, 0, 0]}
                 rotationY={0}
                 side="right"
-                zIndex={1}
+                renderOrderBase={UNDER_ORDER}
               />
             )}
 
-            {/* Page gauche courante (reste posée) */}
+            {/* Page gauche courante (immobile) */}
             {pages[leftPageIndex] && (
               <BookPage
                 frontImageUrl={pages[leftPageIndex].image}
-                backImageUrl={null}
-                position={[-1.25, 0, 0]}
-                rotationY={0}
+                position={[LEFT_X, 0, 0]}
                 side="left"
-                zIndex={5}
+                renderOrderBase={STATIC_ORDER}
               />
             )}
 
-            {/* Page droite en train de tourner : son verso = page gauche du spread suivant */}
+            {/* Page droite qui tourne */}
             {pages[rightPageIndex] && (
               <BookPage
                 frontImageUrl={pages[rightPageIndex].image}
-                backImageUrl={pages[nextLeftPageIndex]?.image || null}
-                position={[1.25, 0, 0]}
+                backImageUrl={pages[nextLeftPageIndex]?.image}
+                position={[RIGHT_X, 0, 0]}
                 rotationY={turningPageRotation}
                 side="right"
-                zIndex={10}
+                renderOrderBase={TURN_ORDER}
               />
             )}
           </>
-        ) : /* --- ANIMATION ARRIÈRE (tourne la page de gauche) --- */
-        !isTurningForward && turnProgress > 0 ? (
+        ) : /* === PAGE TOURNEE EN ARRIÈRE === */ !isTurningForward && turnProgress > 0 ? (
           <>
-            {/* Spread précédent (déjà visible en-dessous) */}
+            {/* Spread précédent sous la page qui tourne */}
             {pages[prevLeftPageIndex] && (
               <BookPage
                 frontImageUrl={pages[prevLeftPageIndex].image}
-                backImageUrl={null}
-                position={[-1.25, 0, 0]}
-                rotationY={0}
+                position={[LEFT_X, 0, 0]}
                 side="left"
-                zIndex={1}
+                renderOrderBase={UNDER_ORDER}
               />
             )}
             {pages[prevRightPageIndex] && (
               <BookPage
                 frontImageUrl={pages[prevRightPageIndex].image}
-                backImageUrl={null}
-                position={[1.25, 0, 0]}
-                rotationY={0}
+                position={[RIGHT_X, 0, 0]}
                 side="right"
-                zIndex={1}
+                renderOrderBase={UNDER_ORDER}
               />
             )}
 
-            {/* Page droite courante (reste posée) */}
+            {/* Page droite courante (immobile) */}
             {pages[rightPageIndex] && (
               <BookPage
                 frontImageUrl={pages[rightPageIndex].image}
-                backImageUrl={null}
-                position={[1.25, 0, 0]}
-                rotationY={0}
+                position={[RIGHT_X, 0, 0]}
                 side="right"
-                zIndex={5}
+                renderOrderBase={STATIC_ORDER}
               />
             )}
 
-            {/* Page gauche en train de tourner : son verso = page droite du spread précédent */}
+            {/* Page gauche qui tourne */}
             {pages[leftPageIndex] && (
               <BookPage
                 frontImageUrl={pages[leftPageIndex].image}
-                backImageUrl={pages[prevRightPageIndex]?.image || null}
-                position={[-1.25, 0, 0]}
+                backImageUrl={pages[prevRightPageIndex]?.image}
+                position={[LEFT_X, 0, 0]}
                 rotationY={turningPageRotation}
                 side="left"
-                zIndex={10}
+                renderOrderBase={TURN_ORDER}
               />
             )}
           </>
-        ) : (
-          /* --- PAS D'ANIMATION : afficher simplement le spread courant --- */
+        ) : /* === AUCUNE PAGE EN ROTATION === */ (
           <>
             {pages[leftPageIndex] && (
               <BookPage
                 frontImageUrl={pages[leftPageIndex].image}
-                backImageUrl={null}
-                position={[-1.25, 0, 0]}
-                rotationY={0}
+                position={[LEFT_X, 0, 0]}
                 side="left"
-                zIndex={5}
+                renderOrderBase={STATIC_ORDER}
               />
             )}
             {pages[rightPageIndex] && (
               <BookPage
                 frontImageUrl={pages[rightPageIndex].image}
-                backImageUrl={null}
-                position={[1.25, 0, 0]}
-                rotationY={0}
+                position={[RIGHT_X, 0, 0]}
                 side="right"
-                zIndex={5}
+                renderOrderBase={STATIC_ORDER}
               />
             )}
           </>
