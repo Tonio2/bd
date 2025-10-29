@@ -12,6 +12,7 @@ export function Navigation({
     <>
       {/* Page counter */}
       <motion.div
+        key="page-counter"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         className="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-50 glass-effect px-6 py-3 rounded-full"
@@ -26,6 +27,7 @@ export function Navigation({
         {/* Left zone - Previous page */}
         {canGoPrev && (
           <motion.div
+            key="nav-prev"
             initial={{ opacity: 0 }}
             animate={{ opacity: 0 }}
             whileHover={{ opacity: 1 }}
@@ -54,6 +56,7 @@ export function Navigation({
         {/* Right zone - Next page */}
         {canGoNext && (
           <motion.div
+            key="nav-next"
             initial={{ opacity: 0 }}
             animate={{ opacity: 0 }}
             whileHover={{ opacity: 1 }}
@@ -82,6 +85,7 @@ export function Navigation({
 
       {/* Keyboard hints */}
       <motion.div
+        key="keyboard-hints"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 2, duration: 1 }}
