@@ -140,6 +140,83 @@
         "height": 1800,
         "aspectRatio": "2:3"
       }
+    },
+    {
+      "id": "legende-stellaire",
+      "title": "La Légende Stellaire",
+      "author": "Sophia Chen",
+      "description": "Une épopée spatiale monumentale à travers les galaxies, où une alliance improbable tente de sauver l'univers d'une menace ancestrale.",
+      "coverImage": "/comics/legende-stellaire/cover.svg",
+      "pages": [
+        {
+          "number": 1,
+          "image": "/comics/legende-stellaire/1.svg",
+          "alt": "Page 1 - Chapitre 1: Le Réveil"
+        },
+        {
+          "number": 2,
+          "image": "/comics/legende-stellaire/2.svg",
+          "alt": "Page 2 - Chapitre 2: Le Message"
+        },
+        {
+          "number": 3,
+          "image": "/comics/legende-stellaire/3.svg",
+          "alt": "Page 3 - Chapitre 3: L'Alliance"
+        },
+        {
+          "number": 4,
+          "image": "/comics/legende-stellaire/4.svg",
+          "alt": "Page 4 - Chapitre 4: La Station Oubliée"
+        },
+        {
+          "number": 5,
+          "image": "/comics/legende-stellaire/5.svg",
+          "alt": "Page 5 - Chapitre 5: Le Premier Contact"
+        },
+        {
+          "number": 6,
+          "image": "/comics/legende-stellaire/6.svg",
+          "alt": "Page 6 - Chapitre 6: La Révélation"
+        },
+        {
+          "number": 7,
+          "image": "/comics/legende-stellaire/7.svg",
+          "alt": "Page 7 - Chapitre 7: Le Portail"
+        },
+        {
+          "number": 8,
+          "image": "/comics/legende-stellaire/8.svg",
+          "alt": "Page 8 - Chapitre 8: La Bataille Commence"
+        },
+        {
+          "number": 9,
+          "image": "/comics/legende-stellaire/9.svg",
+          "alt": "Page 9 - Chapitre 9: Le Sacrifice"
+        },
+        {
+          "number": 10,
+          "image": "/comics/legende-stellaire/10.svg",
+          "alt": "Page 10 - Chapitre 10: Le Retournement"
+        },
+        {
+          "number": 11,
+          "image": "/comics/legende-stellaire/11.svg",
+          "alt": "Page 11 - Chapitre 11: La Victoire"
+        },
+        {
+          "number": 12,
+          "image": "/comics/legende-stellaire/12.svg",
+          "alt": "Page 12 - Chapitre 12: Un Nouveau Départ"
+        }
+      ],
+      "totalPages": 12,
+      "publishDate": "2024-04",
+      "tags": ["space-opera", "épique", "sci-fi"],
+      "metadata": {
+        "width": 1200,
+        "height": 1800,
+        "aspectRatio": "2:3"
+      }
     }
   ],
   "settings": {

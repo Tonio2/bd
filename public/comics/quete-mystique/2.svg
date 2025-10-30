@@ -4,36 +4,32 @@
   <!-- Page border -->
   <rect x="40" y="60" width="720" height="1080" fill="none" stroke="#333333" stroke-width="2"/>
 
-  <!-- Large page number for easy identification -->
-  <text x="400" y="600" font-family="Arial" font-size="180" font-weight="bold" fill="#D4AF37" text-anchor="middle" opacity="0.8">
-    2
+  <!-- Content panels -->
+  <rect x="80" y="100" width="640" height="300" fill="#E5E5E5" stroke="#666666" stroke-width="2"/>
+  <text x="400" y="240" font-family="sans-serif" font-size="32" fill="#666666" text-anchor="middle">
+    Panel 1
   </text>
-
-  <!-- Comic title -->
-  <text x="400" y="700" font-family="Arial" font-size="32" fill="#333333" text-anchor="middle">
+  <text x="400" y="280" font-family="sans-serif" font-size="20" fill="#999999" text-anchor="middle">
     La Quête Mystique
   </text>
 
-  <!-- Page label -->
-  <text x="400" y="760" font-family="Arial" font-size="24" fill="#666666" text-anchor="middle">
-    Page 2
+  <rect x="80" y="440" width="300" height="280" fill="#E5E5E5" stroke="#666666" stroke-width="2"/>
+  <text x="230" y="580" font-family="sans-serif" font-size="28" fill="#666666" text-anchor="middle">
+    Panel 2
   </text>
 
-  <!-- Panel placeholders -->
-  <rect x="80" y="100" width="640" height="200" fill="#E5E5E5" stroke="#666666" stroke-width="2"/>
-  <text x="400" y="210" font-family="Arial" font-size="24" fill="#999999" text-anchor="middle">Panel 1</text>
+  <rect x="420" y="440" width="300" height="280" fill="#E5E5E5" stroke="#666666" stroke-width="2"/>
+  <text x="570" y="580" font-family="sans-serif" font-size="28" fill="#666666" text-anchor="middle">
+    Panel 3
+  </text>
 
-  <rect x="80" y="340" width="300" height="200" fill="#E5E5E5" stroke="#666666" stroke-width="2"/>
-  <text x="230" y="450" font-family="Arial" font-size="20" fill="#999999" text-anchor="middle">Panel 2</text>
+  <rect x="80" y="760" width="640" height="300" fill="#E5E5E5" stroke="#666666" stroke-width="2"/>
+  <text x="400" y="910" font-family="sans-serif" font-size="32" fill="#666666" text-anchor="middle">
+    Panel 4
+  </text>
 
-  <rect x="420" y="340" width="300" height="200" fill="#E5E5E5" stroke="#666666" stroke-width="2"/>
-  <text x="570" y="450" font-family="Arial" font-size="20" fill="#999999" text-anchor="middle">Panel 3</text>
-
-  <rect x="80" y="580" width="640" height="200" fill="#E5E5E5" stroke="#666666" stroke-width="2"/>
-  <text x="400" y="690" font-family="Arial" font-size="24" fill="#999999" text-anchor="middle">Panel 4</text>
-
-  <!-- Page number at bottom -->
-  <text x="80" y="1150" font-family="Arial" font-size="28" font-weight="bold" fill="#8B4789" text-anchor="middle">
+  <!-- Page number -->
+  <text x="80" y="1150" font-family="sans-serif" font-size="24" fill="#333333" text-anchor="middle">
     2
   </text>
 
