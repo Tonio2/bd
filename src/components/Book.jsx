@@ -39,13 +39,14 @@ export function Book({
 
   return (
     <Canvas
-      camera={{ position: [0, 0, 7], fov: 45, near: 0.1, far: 1000 }}
-      gl={{
-        antialias: true,
-        toneMapping: THREE.NoToneMapping,
-        outputColorSpace: THREE.SRGBColorSpace,
-        preserveDrawingBuffer: true, // ✅ empêche certains clignotements
-      }}
+        camera={{ position: [0, 0, 7], fov: 35 }}
+        style={{ width: '100%', height: '100%' }}
+        gl={{
+            antialias: true,
+            toneMapping: THREE.NoToneMapping,
+            outputColorSpace: THREE.SRGBColorSpace,
+            preserveDrawingBuffer: true, // ✅ empêche certains clignotements
+        }}
     >
       <ambientLight intensity={2} />
 
