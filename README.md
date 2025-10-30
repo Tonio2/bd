@@ -2,6 +2,17 @@
 
 Un lecteur de bandes dessinées web immersif avec effet 3D de tournage de pages réaliste.
 
+## 📸 Screenshots
+
+### Page d'accueil - Galerie de comics
+![Galerie d'accueil](./screenshots/gallery.png)
+
+### Lecture de BD - Pages ouvertes
+![Lecteur de BD](./screenshots/book-open.png)
+
+### Animation de tournage de page
+![Rotation de page](./screenshots/page-turn.png)
+
 ## ✨ Fonctionnalités
 
 - 🎨 **Design immersif** avec thème sombre élégant
